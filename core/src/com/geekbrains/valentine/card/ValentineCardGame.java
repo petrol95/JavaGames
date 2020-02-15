@@ -72,6 +72,7 @@ public class ValentineCardGame extends ApplicationAdapter {
     private static final int HEARTS_COUNT = 220;
     private Heart[] hearts;
     private float globalTime;
+    private Vector2 msPrev;
 
     @Override
     public void create() {
@@ -81,6 +82,7 @@ public class ValentineCardGame extends ApplicationAdapter {
         logoCenter = new Vector2(0, 0);
         tmp = new Vector2(0, 0);
         hearts = new Heart[HEARTS_COUNT];
+        msPrev = new Vector2(-1, -1);
         for (int i = 0; i < hearts.length; i++) {
             hearts[i] = new Heart();
         }
@@ -100,6 +102,9 @@ public class ValentineCardGame extends ApplicationAdapter {
         batch.setColor(1, 1, 1, 1);
         batch.draw(logoTexture, logoCenter.x - 260, logoCenter.y - 240);
 
+        float sc = 0.1f + Math.abs((float)Math.sin(globalTime * 4.0f)) * 0.05f;
+        batch.draw(heartTexture, logoCenter.x - 70 - 135, logoCenter.y - 45, 150, 150, 300, 300, sc, sc, 0, 0, 0, 300, 300, false, false);
+        batch.draw(heartTexture, logoCenter.x + 30 - 135, logoCenter.y - 45, 150, 150, 300, 300, sc, sc, 0, 0, 0, 300, 300, false, false);
 
         for (int i = 0; i < hearts.length; i++) {
             hearts[i].render();
@@ -108,9 +113,16 @@ public class ValentineCardGame extends ApplicationAdapter {
     }
 
     public void update(float dt) {
+        float dx = 0.0f, dy = 0.0f;
+        if (msPrev.x > -1 && msPrev.y > -1 && Gdx.input.isTouched()) {
+            dx = (Gdx.input.getX() - msPrev.x) * dt * 10.0f;
+            dy = ((720.0f - Gdx.input.getY()) - msPrev.y) * dt * 10.0f;
+        }
         globalTime += dt;
 		for (int i = 0; i < hearts.length; i++) {
 			hearts[i].update(dt);
+			hearts[i].velocity.x += dx;
+			hearts[i].velocity.y += dy;
 			float rad = 260.0f;
 			if (hearts[i].position.dst(logoCenter) < rad) {
                 tmp.set(logoCenter).sub(hearts[i].position).nor().scl(-rad).add(logoCenter);
@@ -118,11 +130,13 @@ public class ValentineCardGame extends ApplicationAdapter {
                 hearts[i].velocity.x += Math.signum(hearts[i].position.x - logoCenter.x) * rad * dt;
             }
 		}
+		msPrev.set(Gdx.input.getX(), 720 - Gdx.input.getY());
     }
 
     @Override
     public void dispose() {
         batch.dispose();
         heartTexture.dispose();
+        logoTexture.dispose();
     }
 }
