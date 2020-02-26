@@ -11,7 +11,7 @@ import java.util.Random;
 
 public class rpgGame extends ApplicationAdapter {
     SpriteBatch batch;
-    private final int AST_COUNT = 50;
+    private final int AST_COUNT = 1;
     Asteroid[] ast = new Asteroid[AST_COUNT];
     Random rand = new Random();
 
