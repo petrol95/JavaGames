@@ -11,6 +11,7 @@ import java.util.Random;
 
 public class rpgGame extends ApplicationAdapter {
     SpriteBatch batch;
+    Texture img;
     private final int AST_COUNT = 1;
     Asteroid[] ast = new Asteroid[AST_COUNT];
     Random rand = new Random();
@@ -19,6 +20,7 @@ public class rpgGame extends ApplicationAdapter {
     public void create() {
         batch = new SpriteBatch();
         Asteroid.setMyTexture(new Texture("asteroid.tga"));
+        img = new Texture("bomber.tga");
         for (int i = 0; i < AST_COUNT; i++) {
             ast[i] = new Asteroid(new Vector2(rand.nextInt(800), rand.nextInt(600)), new Vector2(3.0f * rand.nextFloat() - 0.5f, 3.0f * rand.nextFloat() - 0.5f));
 
@@ -31,6 +33,7 @@ public class rpgGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
+        batch.draw(img, InputHandler.getMousePosition().x, InputHandler.getMousePosition().y);
 		for (int i = 0; i < AST_COUNT; i++) {
 			ast[i].render(batch);
 		}
