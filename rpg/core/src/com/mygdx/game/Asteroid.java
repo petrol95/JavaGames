@@ -21,11 +21,12 @@ public class Asteroid {
     }
 
     public void render(SpriteBatch batch) {
-        batch.draw(myTexture, position.x, position.y);
+        batch.draw(myTexture, position.x - 20, position.y - 20);
     }
 
     public void update() {
         position.add(velocity);
+        velocity.scl(0.995f);
         if (position.x < -myTexture.getWidth())
             position.x = Gdx.graphics.getWidth();
         if (position.y < -myTexture.getHeight())
@@ -35,8 +36,8 @@ public class Asteroid {
         if (position.y > Gdx.graphics.getHeight())
             position.y = -myTexture.getHeight();
 
-        if(InputHandler.isPressed()) {
-            if (position.cpy().sub(InputHandler.getMousePosition()).len() < 150)
+        if (InputHandler.isPressed()) {
+            if (position.cpy().sub(InputHandler.getMousePosition()).len() < 100)
             velocity = position.cpy().sub(InputHandler.getMousePosition()).nor().scl(5.0f);
         }
     }

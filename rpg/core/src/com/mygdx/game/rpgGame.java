@@ -26,6 +26,7 @@ public class rpgGame extends ApplicationAdapter {
 
         }
     }
+    float time = 0.0f;
 
     @Override
     public void render() {
@@ -33,7 +34,9 @@ public class rpgGame extends ApplicationAdapter {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         batch.begin();
-        batch.draw(img, InputHandler.getMousePosition().x, InputHandler.getMousePosition().y);
+//        batch.draw(img, InputHandler.getMousePosition().x, InputHandler.getMousePosition().y);
+        time += 0.5f;
+        batch.draw(img, InputHandler.getMousePosition().x - 20, InputHandler.getMousePosition().y - 20, 20, 20, 40, 40, 2.0f, 2.0f, time, 0, 0, 40, 40, false, false);
 		for (int i = 0; i < AST_COUNT; i++) {
 			ast[i].render(batch);
 		}
