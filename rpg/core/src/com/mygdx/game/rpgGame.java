@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 
@@ -11,6 +12,7 @@ import java.util.Random;
 
 public class rpgGame extends ApplicationAdapter {
     SpriteBatch batch;
+    BitmapFont bmf;
     Texture img;
     private final int AST_COUNT = 100;
     Asteroid[] ast = new Asteroid[AST_COUNT];
@@ -21,6 +23,7 @@ public class rpgGame extends ApplicationAdapter {
         batch = new SpriteBatch();
         Asteroid.setMyTexture(new Texture("asteroid.tga"));
         img = new Texture("bomber.tga");
+        bmf = new BitmapFont(Gdx.files.internal("my_font.fnt"), Gdx.files.internal("my_font.png"), false);
         for (int i = 0; i < AST_COUNT; i++) {
             ast[i] = new Asteroid(new Vector2(rand.nextInt(800), rand.nextInt(600)), new Vector2(3.0f * rand.nextFloat() - 0.5f, 3.0f * rand.nextFloat() - 0.5f));
 
@@ -36,10 +39,11 @@ public class rpgGame extends ApplicationAdapter {
         batch.begin();
 //        batch.draw(img, InputHandler.getMousePosition().x, InputHandler.getMousePosition().y);
         time += 0.5f;
-        batch.draw(img, InputHandler.getMousePosition().x - 20, InputHandler.getMousePosition().y - 20, 20, 20, 40, 40, 2.0f, 2.0f, time, 0, 0, 40, 40, false, false);
+        batch.draw(img, InputHandler.getMousePosition().x - 20, InputHandler.getMousePosition().y - 20, 20, 20, 40, 40, 1.0f, 1.0f, time, 0, 0, 40, 40, false, false);
 		for (int i = 0; i < AST_COUNT; i++) {
 			ast[i].render(batch);
 		}
+		bmf.draw(batch, "Привет МИР", 50, 50);
         batch.end();
     }
 
