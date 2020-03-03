@@ -14,9 +14,11 @@ public class rpgGame extends ApplicationAdapter {
     SpriteBatch batch;
     BitmapFont bmf;
     Texture img;
-    private final int AST_COUNT = 100;
+    private final int AST_COUNT = 30;
     Asteroid[] ast = new Asteroid[AST_COUNT];
     Random rand = new Random();
+    float x = 10.0f;
+    float y = 80.0f;
 
     @Override
     public void create() {
@@ -39,10 +41,12 @@ public class rpgGame extends ApplicationAdapter {
         batch.begin();
 //        batch.draw(img, InputHandler.getMousePosition().x, InputHandler.getMousePosition().y);
         time += 0.5f;
-        batch.draw(img, InputHandler.getMousePosition().x - 20, InputHandler.getMousePosition().y - 20, 20, 20, 40, 40, 1.0f, 1.0f, time, 0, 0, 40, 40, false, false);
+//        batch.draw(img, InputHandler.getMousePosition().x - 20, InputHandler.getMousePosition().y - 20, 20, 20, 40, 40, 1.0f, 1.0f, time, 0, 0, 40, 40, false, false)
 		for (int i = 0; i < AST_COUNT; i++) {
 			ast[i].render(batch);
 		}
+        batch.draw(img, x, y);
+        x += 65.0f * Gdx.graphics.getDeltaTime();
 		bmf.draw(batch, "Привет МИР", 50, 50);
         batch.end();
     }
